@@ -7,6 +7,7 @@ package Servlets;
 
 import BusinessLogic.Users.IUserService;
 import BusinessLogic.Users.UserService;
+import Entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -41,11 +42,16 @@ public class Session extends HttpServlet {
         
         IUserService userServ = new UserService();
         name = userServ.GetNameByUserId(uid, accessToken);
-        
+        if(!userServ.FBUserIsRegistered(uid))
+        {
+            userServ.SaveUser(uid);
+        }
         HttpSession session = request.getSession(true);
+        User objUser = userServ.GetUserByFBId(uid);
         session.setAttribute("uid", uid);
         session.setAttribute("accessToken", accessToken);
         session.setAttribute("name", name);
+        session.setAttribute("objUser", objUser);
         
         response.sendRedirect("Home");
     }
