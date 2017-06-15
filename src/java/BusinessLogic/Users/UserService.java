@@ -7,6 +7,7 @@ package BusinessLogic.Users;
 
 import DataAccess.Users.IUserRepository;
 import DataAccess.Users.UserRepository;
+import Entities.User;
 
 /**
  *
@@ -18,6 +19,26 @@ public class UserService implements IUserService {
     public String GetNameByUserId(String userid, String accessToken) {
         IUserRepository userRepo = new UserRepository();
         return userRepo.GetNameByUserId(userid, accessToken);
+    }
+
+    @Override
+    public boolean FBUserIsRegistered(String userid) {
+        IUserRepository userRepo = new UserRepository();
+        return userRepo.FBUserIsRegistered(userid);
+    }
+
+    @Override
+    public User GetUserByFBId(String userid) {
+        IUserRepository userRepo = new UserRepository();
+        return userRepo.GetUserByFBId(userid);
+    }
+
+    @Override
+    public void SaveUser(String userid) {
+        User objUser = new User();
+        objUser.setFbId(userid);
+        IUserRepository userRepo = new UserRepository();
+        userRepo.SaveUser(objUser);
     }
     
 }

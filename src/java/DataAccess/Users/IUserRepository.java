@@ -5,10 +5,15 @@
  */
 package DataAccess.Users;
 
+import Entities.User;
+
 /**
  *
  * @author Usuario
  */
 public interface IUserRepository {
     public String GetNameByUserId(String userid, String accessToken);
+    public boolean FBUserIsRegistered(String userid);
+    public User GetUserByFBId(String userid);
+    public void SaveUser(User objUser);
 }

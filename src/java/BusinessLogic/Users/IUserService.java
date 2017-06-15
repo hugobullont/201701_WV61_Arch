@@ -5,10 +5,15 @@
  */
 package BusinessLogic.Users;
 
+import Entities.User;
+
 /**
  *
  * @author Usuario
  */
 public interface IUserService {
     public String GetNameByUserId(String userid, String accessToken);
+    public boolean FBUserIsRegistered(String userid);
+    public User GetUserByFBId(String userid);
+    public void SaveUser(String userid);
 }
