@@ -10,5 +10,5 @@ package DataAccess.Score;
  * @author Usuario
  */
 public interface IScoreRepository {
-    
+    public float CalcularPromObjeto(String a, int id);
 }
