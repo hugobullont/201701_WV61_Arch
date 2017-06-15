@@ -6,6 +6,8 @@
 package BusinessLogic.Score;
 
 import DataAccess.Score.*;
+import Entities.Score;
+import Entities.User;
 
 /**
  *
@@ -18,5 +20,23 @@ public class ScoreService implements IScoreService{
         IScoreRepository scoreRepo = new ScoreRepository();
         return scoreRepo.CalcularPromObjeto(a, objectId);
     }
+
+    @Override
+    public void SaveScore(User objUser, int score, String objType, int objId) {
+        IScoreRepository scoreRepo = new ScoreRepository();
+        Score objScore = new Score();
+        objScore.setIdObject(objId);
+        objScore.setScore(score);
+        objScore.setObjectType(objType);
+        objScore.setUser(objUser);
+        scoreRepo.SaveScore(objScore);
+    }
+
+    @Override
+    public void SaveScore(Score objScore) {
+        IScoreRepository scoreRepo = new ScoreRepository();
+        scoreRepo.SaveScore(objScore);
+    }
+    
     
 }

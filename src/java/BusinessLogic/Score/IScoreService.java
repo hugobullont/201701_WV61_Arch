@@ -5,10 +5,15 @@
  */
 package BusinessLogic.Score;
 
+import Entities.Score;
+import Entities.User;
+
 /**
  *
  * @author Usuario
  */
 public interface IScoreService {
     public float GetPromObject(String a, int objectId);
+    public void SaveScore(User objUser, int score, String objType, int objId);
+    public void SaveScore(Score objScore);
 }

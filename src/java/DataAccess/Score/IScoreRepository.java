@@ -5,10 +5,13 @@
  */
 package DataAccess.Score;
 
+import Entities.Score;
+
 /**
  *
  * @author Usuario
  */
 public interface IScoreRepository {
     public float CalcularPromObjeto(String a, int id);
+    public void SaveScore(Score objScore);
 }

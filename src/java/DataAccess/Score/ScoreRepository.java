@@ -15,6 +15,7 @@ import org.hibernate.Session;
  * @author Usuario
  */
 public class ScoreRepository implements IScoreRepository {
+    @Override
     public float CalcularPromObjeto(String a, int id) {
         Session session = ArchHibernateUtil.getSessionFactory().openSession();   
         char b = a.charAt(0);
@@ -30,5 +31,14 @@ public class ScoreRepository implements IScoreRepository {
             return (total);
         }
         return 0;
+    }
+
+    @Override
+    public void SaveScore(Score objScore) {
+        Session session = ArchHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(objScore);
+        session.getTransaction().commit();
+        session.close();
     }
 }
