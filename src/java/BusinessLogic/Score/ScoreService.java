@@ -16,9 +16,9 @@ import Entities.User;
 public class ScoreService implements IScoreService{
 
     @Override
-    public float GetPromObject(String a, int objectId) {
+    public float GetPromObject(String objectType, int objectId) {
         IScoreRepository scoreRepo = new ScoreRepository();
-        return scoreRepo.CalcularPromObjeto(a, objectId);
+        return scoreRepo.CalcularPromObjeto(objectType, objectId);
     }
 
     @Override

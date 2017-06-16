@@ -12,6 +12,6 @@ import Entities.Score;
  * @author Usuario
  */
 public interface IScoreRepository {
-    public float CalcularPromObjeto(String a, int id);
+    public float CalcularPromObjeto(String objectType, int objectId);
     public void SaveScore(Score objScore);
 }

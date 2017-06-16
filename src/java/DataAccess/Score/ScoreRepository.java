@@ -16,11 +16,11 @@ import org.hibernate.Session;
  */
 public class ScoreRepository implements IScoreRepository {
     @Override
-    public float CalcularPromObjeto(String a, int id) {
+    public float CalcularPromObjeto(String objectType, int objectId) {
         Session session = ArchHibernateUtil.getSessionFactory().openSession();   
-        char b = a.charAt(0);
+        char objectTypeChar = objectType.charAt(0);
         float total=0;
-        List<Score> result = session.createQuery("from score as part where part.objectType=:b and part.idObjetc=:id").setParameter("b",b).setParameter("id",id).list();
+        List<Score> result = session.createQuery("from score as part where part.objectType=:b and part.idObjetc=:id").setParameter("b",objectTypeChar).setParameter("id",objectId).list();
         session.close();
         if(result.size()>0)
         {
