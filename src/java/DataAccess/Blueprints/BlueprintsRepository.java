@@ -45,12 +45,21 @@ public class BlueprintsRepository implements IBlueprintsRepository{
 
     @Override
     public List<Blueprint> GetBlueprintsByString(String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = ArchHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        int len=search.length();
+        List<Blueprint> blueprints = (List<Blueprint>)session.createQuery("FROM Blueprint a us where SUBSTRING(us.name, 0, :len)=:search").setParameter("len", len).setParameter("search", search).list();
+        session.close();
+        return blueprints;
     }
 
     @Override
     public List<Blueprint> GetBlueprintsByUserId(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = ArchHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List<Blueprint> blueprints = (List<Blueprint>)session.createQuery("FROM Blueprint a us where us.user.idUser=:userId join fetch us.user").setParameter("userId",userId).list();
+        session.close();
+        return blueprints;
     }
     
 }
