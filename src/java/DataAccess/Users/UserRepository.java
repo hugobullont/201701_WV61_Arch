@@ -81,5 +81,11 @@ public class UserRepository implements IUserRepository {
         session.getTransaction().commit();
         session.close();
     }
+
+    @Override
+    public String GetProfilePictureUrlByFBId(String userid) {
+        String url = "https://graph.facebook.com/" + userid + "/picture?type=large";
+        return url;
+    }
     
 }

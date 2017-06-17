@@ -40,5 +40,11 @@ public class UserService implements IUserService {
         IUserRepository userRepo = new UserRepository();
         userRepo.SaveUser(objUser);
     }
+
+    @Override
+    public String GetProfilePictureUrlByFBId(String userid) {
+        IUserRepository userRepo = new UserRepository();
+        return userRepo.GetProfilePictureUrlByFBId(userid);
+    }
     
 }
