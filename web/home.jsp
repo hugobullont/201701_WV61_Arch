@@ -28,7 +28,7 @@
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/padding.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
-    <body> 
+    <body background="resources/trama.jpg"> 
                 <ul id="slide-out" class="side-nav fixed">
                     <li><div class="userView">
                       <div class="background">
