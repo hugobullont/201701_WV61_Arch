@@ -7,6 +7,7 @@ package DataAccess.Blueprints;
 
 import Entities.Blueprint;
 import Hibernate.ArchHibernateUtil;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -45,11 +46,17 @@ public class BlueprintsRepository implements IBlueprintsRepository{
 
     @Override
     public List<Blueprint> GetBlueprintsByString(String search) {
-        Session session = ArchHibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        int len=search.length();
-        List<Blueprint> blueprints = (List<Blueprint>)session.createQuery("FROM Blueprint a us where SUBSTRING(us.name, 0, :len)=:search").setParameter("len", len).setParameter("search", search).list();
-        session.close();
+        List<Blueprint> blueprints = new ArrayList<Blueprint>();
+        String searchLower = search.toLowerCase();
+        for(Blueprint bp: this.GetAllBlueprints())
+        {
+            String name = bp.getName().toLowerCase();
+            if(name.contains(searchLower))
+            {
+                blueprints.add(bp);
+            }
+        }
+
         return blueprints;
     }
 

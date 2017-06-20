@@ -4,6 +4,7 @@
     Author     : Hugo
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="Entities.*"%>
 <%@page import="BusinessLogic.Mockups.*"%>
 <%@page import="BusinessLogic.Photos.*"%>
@@ -28,6 +29,17 @@
     String name = (String) httpSession.getAttribute("name");
     String imgurl = userService.GetProfilePictureUrlByFBId(uid);
     String listAction = (String) httpSession.getAttribute("listAction");
+    String object = (String) httpSession.getAttribute("object");
+    List<Blueprint> blueprints = null;
+    List<Mockup> mockups = null;
+    if(object == "Plano")
+    {
+        blueprints = (List<Blueprint>) httpSession.getAttribute("listObjects");
+    }
+    if(object == "Maqueta")
+    {
+        mockups = (List<Mockup>) httpSession.getAttribute("listObjects");
+    }
 %>
 <html>
     <head>
@@ -62,7 +74,9 @@
             <li><a class="waves-effect" href="AgregarMaqueta"><i class="material-icons">add_to_photos</i>Agregar Maqueta</a></li>
             <li><a class="waves-effect" href=""><i class="material-icons">photo_library</i>Mis Maquetas</a></li>
         </ul>
-        
+        <nav class="cyan darken-1 hide-on-large-only" role="navigation" >        
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+        </nav>
         <main>
             <div class="row">
                 <%if(listAction=="Search"){%>
@@ -70,10 +84,39 @@
                   <div class="card white">
                     <div class="card-content black-text">
                       <span class="card-title"><%=pageTitle%></span>
+                      <form action="Buscar_<%=object%>" method="POST">
+                          <div class="row center-align">
+                            <div class="input-field col s8">
+                              <i class="material-icons prefix">search</i>
+                              <input id="searchBar" name="searchBar" type="text" class="validate">
+                            </div>
+                            <div class="input-field col s4">
+                                <button class="btn waves-effect waves-light cyan darken-1" type="submit" name="action">Buscar</button>
+                            </div>
+                          </div>
+                      </form>
                     </div>
                   </div>
                 </div>
                 <%}%>
+                <%if(object == "Plano"){
+                    for(Blueprint bp: blueprints)
+                    {%>
+                <div class="col s12 m12">
+                    <div class="card white">
+                        <div class="card-content black-text row">
+                            <span class="card-title"><%= bp.getName()%></span>
+                            <%String userImgUrl = userService.GetProfilePictureUrlByFBId(bp.getUser().getFbId()); %>
+                            
+                        </div>
+                    </div>
+                </div><%}}%>
+                
+                <%if(object == "Maqueta"){
+                    for(Mockup mk: mockups)
+                    {%>
+                <div class="col s12 m12">
+                </div><%}}%>
             </div>
         </main>
             

@@ -5,7 +5,8 @@
  */
 package Servlets;
 
-import BusinessLogic.Blueprints.*;
+import BusinessLogic.Blueprints.BlueprintsService;
+import BusinessLogic.Blueprints.IBlueprintsService;
 import Entities.Blueprint;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Usuario
  */
-@WebServlet(name = "BuscarPlanos", urlPatterns = {"/BuscarPlanos"})
-public class BuscarPlanos extends HttpServlet {
+@WebServlet(name = "Buscar_Plano", urlPatterns = {"/Buscar_Plano"})
+public class Buscar_Plano extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,24 +38,18 @@ public class BuscarPlanos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(false);
-        
-        IBlueprintsService bpservice = new BlueprintsService();
-        
-        String pageTitle = "Buscar Plano";
-        session.setAttribute("pageTitle", pageTitle);
-        
-        String listAction= "Search";
-        session.setAttribute("listAction",listAction);
-        
-        String object = "Plano";
-        session.setAttribute("object",object);
-        
-        List<Blueprint> planos = bpservice.GetAllBlueprints();
-        session.setAttribute("listObjects", planos);
-        
-        RequestDispatcher rdSearchBlueprints = request.getRequestDispatcher("listObjects.jsp");
-        rdSearchBlueprints.forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Buscar_Plano</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Buscar_Plano at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -83,7 +78,18 @@ public class BuscarPlanos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        HttpSession session = request.getSession(false);
+        
+        IBlueprintsService bpservice = new BlueprintsService();
+        
+        String search = request.getParameter("searchBar");
+        
+        List<Blueprint> planos = bpservice.GetBlueprintsByString(search);
+        session.setAttribute("listObjects", planos);
+        
+        RequestDispatcher rdSearchBlueprints = request.getRequestDispatcher("listObjects.jsp");
+        rdSearchBlueprints.forward(request, response);
     }
 
     /**
