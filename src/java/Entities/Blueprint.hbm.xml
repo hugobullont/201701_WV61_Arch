@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 18-jun-2017 15:45:06 by Hibernate Tools 4.3.1 -->
+<!-- Generated 19-jun-2017 21:49:32 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Entities.Blueprint" table="blueprint" catalog="arch" optimistic-lock="version">
         <id name="idBlueprint" type="java.lang.Integer">

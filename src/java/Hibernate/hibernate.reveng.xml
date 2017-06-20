@@ -41,10 +41,10 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="arch"/>
-  <table-filter match-name="blueprint"/>
   <table-filter match-name="comment"/>
-  <table-filter match-name="score"/>
-  <table-filter match-name="mockup"/>
   <table-filter match-name="user"/>
   <table-filter match-name="photo"/>
+  <table-filter match-name="blueprint"/>
+  <table-filter match-name="mockup"/>
+  <table-filter match-name="score"/>
 </hibernate-reverse-engineering>

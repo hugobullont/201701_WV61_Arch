@@ -1,5 +1,5 @@
 package Entities;
-// Generated 18-jun-2017 15:45:04 by Hibernate Tools 4.3.1
+// Generated 19-jun-2017 21:49:30 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,6 +13,7 @@ public class User  implements java.io.Serializable {
 
      private Integer idUser;
      private String fbId;
+     private String name;
      private Set blueprints = new HashSet(0);
      private Set scores = new HashSet(0);
      private Set comments = new HashSet(0);
@@ -22,11 +23,13 @@ public class User  implements java.io.Serializable {
     }
 
 	
-    public User(String fbId) {
+    public User(String fbId, String name) {
         this.fbId = fbId;
+        this.name = name;
     }
-    public User(String fbId, Set blueprints, Set scores, Set comments, Set mockups) {
+    public User(String fbId, String name, Set blueprints, Set scores, Set comments, Set mockups) {
        this.fbId = fbId;
+       this.name = name;
        this.blueprints = blueprints;
        this.scores = scores;
        this.comments = comments;
@@ -46,6 +49,13 @@ public class User  implements java.io.Serializable {
     
     public void setFbId(String fbId) {
         this.fbId = fbId;
+    }
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
     public Set getBlueprints() {
         return this.blueprints;

@@ -5,11 +5,9 @@
  */
 package Servlets;
 
-import BusinessLogic.Users.IUserService;
-import BusinessLogic.Users.UserService;
-import Entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Usuario
  */
-@WebServlet(name = "Session", urlPatterns = {"/Session"})
-public class Session extends HttpServlet {
+@WebServlet(name = "BuscarPlanos", urlPatterns = {"/BuscarPlanos"})
+public class BuscarPlanos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,24 +34,14 @@ public class Session extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String uid = request.getParameter("uid");
-        String accessToken = request.getParameter("accessToken");
-        String name;
+        HttpSession session = request.getSession(false);
+        String pageTitle = "Buscar Planos";
+        session.setAttribute("pageTitle", pageTitle);
+        String listAction= "Search";
+        session.setAttribute("listAction",listAction);
         
-        IUserService userServ = new UserService();
-        name = userServ.GetNameByUserId(uid, accessToken);
-        if(!userServ.FBUserIsRegistered(uid))
-        {
-            userServ.SaveUser(uid,accessToken);
-        }
-        HttpSession session = request.getSession(true);
-        User objUser = userServ.GetUserByFBId(uid);
-        session.setAttribute("uid", uid);
-        session.setAttribute("accessToken", accessToken);
-        session.setAttribute("name", name);
-        session.setAttribute("objUser", objUser);
-        
-        response.sendRedirect("Home");
+        RequestDispatcher rdSearchBlueprints = request.getRequestDispatcher("listObjects.jsp");
+        rdSearchBlueprints.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

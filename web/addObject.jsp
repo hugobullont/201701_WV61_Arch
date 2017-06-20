@@ -13,7 +13,6 @@
     String uid = (String) httpsession.getAttribute("uid");
     String accessToken = (String) httpsession.getAttribute("accessToken");
     String name = (String) httpsession.getAttribute("name");
-    String firstName = name.split(" ")[0];
     String imgurl = userService.GetProfilePictureUrlByFBId(uid);
     String actionAdd = (String) httpsession.getAttribute("actionAdd");
 %>
@@ -42,7 +41,7 @@
                 </div>
             </li>
             <li><a class="subheader">Planos</a></li>
-            <li><a class="waves-effect" href=""><i class="material-icons">find_in_page</i>Buscar Plano</a></li>
+            <li><a class="waves-effect" href="BuscarPlanos"><i class="material-icons">find_in_page</i>Buscar Plano</a></li>
             <li><a class="waves-effect" href="AgregarPlano"><i class="material-icons">add_circle</i>Agregar Plano</a></li>
             <li><a class="waves-effect" href=""><i class="material-icons">dns</i>Mis Planos</a></li>
             <li><a class="subheader">Maquetas</a></li>

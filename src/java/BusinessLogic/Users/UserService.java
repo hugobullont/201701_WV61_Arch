@@ -34,10 +34,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void SaveUser(String userid) {
+    public void SaveUser(String userid, String accessToken) {
         User objUser = new User();
         objUser.setFbId(userid);
         IUserRepository userRepo = new UserRepository();
+        String name = userRepo.GetNameByUserId(userid, accessToken);
+        String firstName = name.split(" ")[0];
+        objUser.setName(firstName);
         userRepo.SaveUser(objUser);
     }
 
@@ -45,6 +48,12 @@ public class UserService implements IUserService {
     public String GetProfilePictureUrlByFBId(String userid) {
         IUserRepository userRepo = new UserRepository();
         return userRepo.GetProfilePictureUrlByFBId(userid);
+    }
+
+    @Override
+    public String GetFirstNameByUserId(String userid) {
+        IUserRepository userRepo = new UserRepository();
+        return userRepo.GetFirstNameByUserId(userid);
     }
     
 }

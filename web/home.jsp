@@ -39,7 +39,7 @@
                       <span class="white-text email"></span>
                     </div></li>
                     <li><a class="subheader">Planos</a></li>
-                    <li><a class="waves-effect" href=""><i class="material-icons">find_in_page</i>Buscar Plano</a></li>
+                    <li><a class="waves-effect" href="BuscarPlanos"><i class="material-icons">find_in_page</i>Buscar Plano</a></li>
                     <li><a class="waves-effect" href="AgregarPlano"><i class="material-icons">add_circle</i>Agregar Plano</a></li>
                     <li><a class="waves-effect" href=""><i class="material-icons">dns</i>Mis Planos</a></li>
                     <li><a class="subheader">Maquetas</a></li>

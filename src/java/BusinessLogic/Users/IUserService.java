@@ -13,8 +13,9 @@ import Entities.User;
  */
 public interface IUserService {
     public String GetNameByUserId(String userid, String accessToken);
+    public String GetFirstNameByUserId(String userid);
     public boolean FBUserIsRegistered(String userid);
     public String GetProfilePictureUrlByFBId(String userid);
     public User GetUserByFBId(String userid);
-    public void SaveUser(String userid);
+    public void SaveUser(String userid, String accessToken);
 }

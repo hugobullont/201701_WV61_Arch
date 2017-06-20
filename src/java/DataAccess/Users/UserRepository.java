@@ -87,5 +87,11 @@ public class UserRepository implements IUserRepository {
         String url = "https://graph.facebook.com/" + userid + "/picture?type=large";
         return url;
     }
+
+    @Override
+    public String GetFirstNameByUserId(String userid) {
+        User user = this.GetUserByFBId(userid);
+        return user.getName();
+    }
     
 }
