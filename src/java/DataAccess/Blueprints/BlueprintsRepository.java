@@ -62,10 +62,16 @@ public class BlueprintsRepository implements IBlueprintsRepository{
 
     @Override
     public List<Blueprint> GetBlueprintsByUserId(int userId) {
-        Session session = ArchHibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<Blueprint> blueprints = (List<Blueprint>)session.createQuery("FROM Blueprint a us where us.user.idUser=:userId join fetch us.user").setParameter("userId",userId).list();
-        session.close();
+        
+        List<Blueprint> blueprints = new ArrayList<Blueprint>();
+        for(Blueprint bp: this.GetAllBlueprints())
+        {
+            if(bp.getUser().getIdUser() == userId)
+            {
+                blueprints.add(bp);
+            }
+        }
+
         return blueprints;
     }
     

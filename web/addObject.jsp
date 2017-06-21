@@ -43,11 +43,11 @@
             <li><a class="subheader">Planos</a></li>
             <li><a class="waves-effect" href="BuscarPlanos"><i class="material-icons">find_in_page</i>Buscar Plano</a></li>
             <li><a class="waves-effect" href="AgregarPlano"><i class="material-icons">add_circle</i>Agregar Plano</a></li>
-            <li><a class="waves-effect" href=""><i class="material-icons">dns</i>Mis Planos</a></li>
+            <li><a class="waves-effect" href="MisPlanos"><i class="material-icons">dns</i>Mis Planos</a></li>
             <li><a class="subheader">Maquetas</a></li>
-            <li><a class="waves-effect" href=""><i class="material-icons">find_in_page</i>Buscar Maqueta</a></li>
+            <li><a class="waves-effect" href="BuscarMaquetas"><i class="material-icons">find_in_page</i>Buscar Maqueta</a></li>
             <li><a class="waves-effect" href="AgregarMaqueta"><i class="material-icons">add_to_photos</i>Agregar Maqueta</a></li>
-            <li><a class="waves-effect" href=""><i class="material-icons">photo_library</i>Mis Maquetas</a></li>
+            <li><a class="waves-effect" href="MisMaquetas"><i class="material-icons">photo_library</i>Mis Maquetas</a></li>
         </ul>
         <nav class="cyan darken-1 hide-on-large-only" role="navigation" >        
             <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
