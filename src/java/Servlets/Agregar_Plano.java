@@ -79,6 +79,9 @@ public class Agregar_Plano extends HttpServlet {
         String description = request.getParameter("txtAreaDescription");
         
         Part filePart = request.getPart("fileBlueprints");
+        String fileName = filePart.getSubmittedFileName();
+        String[] fileNameFull = fileName.split("\\.");
+        String fileExtension = fileNameFull[1];
         InputStream fileContent = filePart.getInputStream();
         byte[] bytes = IOUtils.toByteArray(fileContent);
         
@@ -86,6 +89,7 @@ public class Agregar_Plano extends HttpServlet {
         objBlueprint.setDescription(description);
         objBlueprint.setUser(cUser);
         objBlueprint.setBlueprintFile(bytes);
+        objBlueprint.setFileType(fileExtension);
         
         blueprintService.SaveBlueprint(objBlueprint);
         

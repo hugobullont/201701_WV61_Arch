@@ -18,9 +18,9 @@ public class ScoreRepository implements IScoreRepository {
     @Override
     public float CalcularPromObjeto(String objectType, int objectId) {
         Session session = ArchHibernateUtil.getSessionFactory().openSession();   
-        char objectTypeChar = objectType.charAt(0);
+        
         float total=0;
-        List<Score> result = session.createQuery("from score as part where part.objectType=:b and part.idObjetc=:id").setParameter("b",objectTypeChar).setParameter("id",objectId).list();
+        List<Score> result = session.createQuery("from Score as part where part.objectType=:b and part.idObject=:id").setParameter("b",objectType).setParameter("id",objectId).list();
         session.close();
         if(result.size()>0)
         {
@@ -30,7 +30,11 @@ public class ScoreRepository implements IScoreRepository {
             total=total/result.size();
             return (total);
         }
-        return 0;
+        else
+        {
+            return -1;
+        }
+
     }
 
     @Override

@@ -1,5 +1,5 @@
 package Entities;
-// Generated 19-jun-2017 21:49:30 by Hibernate Tools 4.3.1
+// Generated 23-jun-2017 21:49:20 by Hibernate Tools 4.3.1
 
 
 
@@ -14,15 +14,17 @@ public class Blueprint  implements java.io.Serializable {
      private byte[] blueprintFile;
      private String name;
      private String description;
+     private String fileType;
 
     public Blueprint() {
     }
 
-    public Blueprint(User user, byte[] blueprintFile, String name, String description) {
+    public Blueprint(User user, byte[] blueprintFile, String name, String description, String fileType) {
        this.user = user;
        this.blueprintFile = blueprintFile;
        this.name = name;
        this.description = description;
+       this.fileType = fileType;
     }
    
     public Integer getIdBlueprint() {
@@ -59,6 +61,13 @@ public class Blueprint  implements java.io.Serializable {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String getFileType() {
+        return this.fileType;
+    }
+    
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
 

@@ -114,9 +114,19 @@
                 <div class="col s12 m12">
                     <div class="card white">
                         <div class="card-content black-text row">
-                            <span class="card-title"><%= bp.getName()%></span>
-                            <%String userImgUrl = userService.GetProfilePictureUrlByFBId(bp.getUser().getFbId()); %>
-                            
+                            <span class="card-title col s12 m12"><%= bp.getName()%></span>
+                            <%float score = Float.valueOf(scoreService.GetPromObject("P", bp.getIdBlueprint())); %>
+                            <div class="col s6 m6 l6">
+                                <h6>Aporte de: <%= bp.getUser().getName() %></h6>
+                                <h6>Valoración del Aporte: <%if(score>-1){ out.print(score);} else{out.print("No hay Valoraciones");} %></h6>
+                            </div>
+                            <div class="col s6 m6 l6 right-align">
+                                <form action="MostrarInformacion" method="POST">
+                                    <div class="input-field">
+                                        <button class="btn waves-effect waves-light cyan darken-1" type="submit" name="btnShow">+ Info</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div><%}}%>
