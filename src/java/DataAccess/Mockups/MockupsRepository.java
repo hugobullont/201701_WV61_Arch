@@ -5,8 +5,10 @@
  */
 package DataAccess.Mockups;
 
+import Entities.Blueprint;
 import Entities.Mockup;
 import Hibernate.ArchHibernateUtil;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -45,21 +47,45 @@ public class MockupsRepository implements IMockupsRepository{
 
     @Override
     public List<Mockup> GetMockupsByString(String search) {
-        Session session = ArchHibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        int len=search.length();
-        List<Mockup> mockups = (List<Mockup>)session.createQuery("FROM Mockup a us where SUBSTRING(us.name, 0, :len)=:search").setParameter("len", len).setParameter("search", search).list();
-        session.close();
+        List<Mockup> mockups = new ArrayList<Mockup>();
+        String searchLower = search.toLowerCase();
+        for(Mockup mk: this.GetAllMockups())
+        {
+            String name = mk.getName().toLowerCase();
+            if(name.contains(searchLower))
+            {
+                mockups.add(mk);
+            }
+        }
+
         return mockups;
     }
 
     @Override
     public List<Mockup> GetMockupsByUserId(int userId) {
-        Session session = ArchHibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<Mockup> mockups = (List<Mockup>)session.createQuery("FROM Mockup a us where us.user.idUser=:userId join fetch us.user").setParameter("userId",userId).list();
-        session.close();
+        List<Mockup> mockups = new ArrayList<Mockup>();
+        for(Mockup mk: this.GetAllMockups())
+        {
+            if(mk.getUser().getIdUser() == userId)
+            {
+                mockups.add(mk);
+            }
+        }
+
         return mockups;
+    }
+
+    @Override
+    public Mockup GetMockupById(int mockupId) {
+        for(Mockup mk: this.GetAllMockups())
+        {
+            if(mk.getIdMockup()== mockupId)
+            {
+                return mk;
+            }
+        }
+        
+        return null;
     }
     
 }

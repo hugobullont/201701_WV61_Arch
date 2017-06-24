@@ -18,4 +18,5 @@ public interface IMockupsRepository {
     public List<Mockup> GetAllMockups();
     public List<Mockup> GetMockupsByString(String search);
     public List<Mockup> GetMockupsByUserId(int userId);
+    public Mockup GetMockupById(int mockupId);
 }

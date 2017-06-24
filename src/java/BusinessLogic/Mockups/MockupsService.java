@@ -44,5 +44,11 @@ public class MockupsService implements IMockupsService{
         IMockupsRepository repo = new MockupsRepository();
         return repo.GetMockupsByUserId(userId);
     }
+
+    @Override
+    public Mockup GetMockupById(int mockupId) {
+        IMockupsRepository repo = new MockupsRepository();
+        return repo.GetMockupById(mockupId);
+    }
     
 }
