@@ -74,5 +74,18 @@ public class BlueprintsRepository implements IBlueprintsRepository{
 
         return blueprints;
     }
+
+    @Override
+    public Blueprint GetBlueprintById(int blueprintId) {
+        for(Blueprint bp: this.GetAllBlueprints())
+        {
+            if(bp.getIdBlueprint() == blueprintId)
+            {
+                return bp;
+            }
+        }
+        
+        return null;
+    }
     
 }

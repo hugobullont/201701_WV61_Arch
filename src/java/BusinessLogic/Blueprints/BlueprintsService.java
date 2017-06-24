@@ -44,5 +44,11 @@ public class BlueprintsService implements IBlueprintsService{
         IBlueprintsRepository repo = new BlueprintsRepository();
         return repo.GetBlueprintsByUserId(userId);
     }
+
+    @Override
+    public Blueprint GetBlueprintById(int blueprintId) {
+        IBlueprintsRepository repo = new BlueprintsRepository();
+        return repo.GetBlueprintById(blueprintId);
+    }
     
 }

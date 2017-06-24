@@ -18,4 +18,5 @@ public interface IBlueprintsService {
     public List<Blueprint> GetAllBlueprints();
     public List<Blueprint> GetBlueprintsByString(String search);
     public List<Blueprint> GetBlueprintsByUserId(int userId);
+    public Blueprint GetBlueprintById(int blueprintId);
 }
