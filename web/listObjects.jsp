@@ -124,6 +124,8 @@
                                 <form action="MostrarInformacion" method="POST">
                                     <div class="input-field">
                                         <button class="btn waves-effect waves-light cyan darken-1" type="submit" name="btnShow">+ Info</button>
+                                        <input type="hidden" id="objectId" name="objectId" value="<%= bp.getIdBlueprint()%>">
+                                        <input type="hidden" id="objectType" name="objectType" value="P">
                                     </div>
                                 </form>
                             </div>
