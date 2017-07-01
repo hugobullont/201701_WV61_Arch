@@ -123,7 +123,6 @@ public class Descargar extends HttpServlet {
                 String headerKey = "Content-Disposition";
                 String headerValue = String.format("attachment; filename=\"%s\"", fileName);
                 response.setHeader(headerKey, headerValue);
- 
                 // writes the file to the client
                 OutputStream outStream = response.getOutputStream();
                  
