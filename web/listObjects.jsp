@@ -117,8 +117,8 @@
                             <span class="card-title col s12 m12"><%= bp.getName()%></span>
                             <%float score = Float.valueOf(scoreService.GetPromObject("P", bp.getIdBlueprint())); %>
                             <div class="col s6 m6 l6">
-                                <h6>Aporte de: <%= bp.getUser().getName() %></h6>
-                                <h6>Valoración del Aporte: <%if(score>-1){ out.print(score);} else{out.print("No hay Valoraciones");} %></h6>
+                                <h6 class="grey-text text-lighten-1">Aporte de: <%= bp.getUser().getName() %></h6>
+                                <h6 class="grey-text text-lighten-1">Valoración del Aporte: <%if(score>-1){ out.print(score);} else{out.print("No hay Valoraciones");} %></h6>
                             </div>
                             <div class="col s6 m6 l6 right-align">
                                 <form action="MostrarInformacion" method="POST">
