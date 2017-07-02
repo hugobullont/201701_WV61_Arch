@@ -4,6 +4,7 @@
     Author     : Hugo
 --%>
 
+<%@page import="Entities.User"%>
 <%@page import="BusinessLogic.Score.*"%>
 <%@page import="Entities.Mockup"%>
 <%@page import="Entities.Blueprint"%>
@@ -23,13 +24,19 @@
     Blueprint objectBlueprint = new Blueprint();
     Mockup objectMockup = new Mockup();
     
+    User objUser = (User) session.getAttribute("objUser");
+    
+    boolean owner = false;
+    
     if(objType.contains("P"))
     {
         objectBlueprint = (Blueprint)session.getAttribute("informationObject");
+        if(objectBlueprint.getUser().getIdUser() == objUser.getIdUser()) owner = true;
     }
     if(objType.contains("M"))
     {
          objectMockup = (Mockup)session.getAttribute("informationObject");
+         if(objectMockup.getUser().getIdUser() == objUser.getIdUser()) owner = true;
     }
     
 %>
@@ -82,6 +89,7 @@
                                 <h6 class="grey-text text-lighten-1">Valoración</h6>
                                 <%float score = Float.valueOf(scoreService.GetPromObject("P", objectBlueprint.getIdBlueprint())); %>
                                 <h6 class="grey-text"><%if(score>-1){ out.print(score);} else{out.print("No hay Valoraciones");} %></h6>
+                                
                                 <form action="Descargar" method="POST">
                                     <div class="input-field">
                                         <button class="btn waves-effect waves-light cyan darken-1" type="submit" name="btnDownload">Descargar</button>
@@ -100,6 +108,43 @@
                             <%}%>
                         </div>
                     </div>
+                    <% if (!owner) {%>
+                    <div class="card white">
+                        <div class="card-content black-text row">
+                            <span class="card-title col s12 m12">¡Valora este Aporte!</span>
+                            <form action="Valorar" method="POST" class="row">
+                                <div class="input-field col s12 m12">
+                                    <p><input name="valueGroup" type="radio" id="value0" />
+                                        <label for="value0">0</label></p>
+                                    <p><input name="valueGroup" type="radio" id="value1" />
+                                        <label for="value1">1</label></p>
+                                    <p><input name="valueGroup" type="radio" id="value2" />
+                                        <label for="value2">2</label></p>
+                                    <p><input name="valueGroup" type="radio" id="value3" />
+                                        <label for="value3">3</label></p>
+                                    <p><input name="valueGroup" type="radio" id="value4" />
+                                        <label for="value4">4</label></p>
+                                    <p><input name="valueGroup" type="radio" id="value5" />
+                                        <label for="value5">5</label></p>
+                                    <%if (objType.contains("P")){%>
+                                    <input type="hidden" id="objectId" name="objectId" value="<%= objectBlueprint.getIdBlueprint()%>">
+                                    <input type="hidden" id="objectType" name="objectType" value="P">
+                                    <% } %>
+                                    <%if (objType.contains("M")){%>
+                                    <input type="hidden" id="objectId" name="objectId" value="<%= objectMockup.getIdMockup() %>">
+                                    <input type="hidden" id="objectType" name="objectType" value="M">
+                                    <% } %>
+                                </div>
+                                <div class="input-field col s12 m12">
+                                    
+                                </div>
+                                <div class="input-field col s12 m12">
+                                    <button class="btn waves-effect waves-light cyan darken-1" type="submit" name="btnValorar">Valorar</button>
+                                </div>
+                            </form>
+                        </div>
+                </div>
+                    <%}%>
             </div>
         </main>
         <script src="js/materialize.js"></script>

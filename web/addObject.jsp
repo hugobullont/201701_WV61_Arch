@@ -61,18 +61,18 @@
                       <form action="Agregar_<%=actionAdd%>" method="POST" enctype="multipart/form-data">
                           <div class="row">
                             <div class="input-field col s12">
-                                <input id="txtname" name="txtname" type="text" class="validate">
+                                <input id="txtname" name="txtname" type="text" class="validate" maxlength="45" data-length="45" required>
                                 <label for="txtname">Nombre (<%=actionAdd%>)</label>
                             </div>
                             <div class="input-field col s12">
-                                <textarea id="txtAreaDescription"  name="txtAreaDescription" class="materialize-textarea" maxlength="255"></textarea>
+                                <textarea id="txtAreaDescription"  name="txtAreaDescription" class="materialize-textarea" maxlength="255" data-length="255" required></textarea>
                                 <label for="txtAreaDescription">Descripción</label>
                             </div>
                             <%if (actionAdd == "Plano") {%>
                             <div class="file-field input-field col s12">
                                 <div class="btn cyan darken-1">
                                   <span>Examinar</span>
-                                  <input id="fileBlueprints" type="file" name="fileBlueprints" accept=".dwg, .zip, .rar">
+                                  <input id="fileBlueprints" type="file" name="fileBlueprints" accept=".dwg, .zip, .rar" required>
                                 </div>
                                 <div class="file-path-wrapper">
                                   <input class="file-path validate" type="text" placeholder="Sube tu Plano en formato DWG, ZIP o RAR">

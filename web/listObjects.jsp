@@ -88,7 +88,7 @@
                           <div class="row center-align">
                             <div class="input-field col s8">
                               <i class="material-icons prefix">search</i>
-                              <input id="searchBar" name="searchBar" type="text" class="validate">
+                              <input placeholder="Ingrese el texto a Buscar..." id="searchBar" name="searchBar" type="text" class="validate" maxlength="45">
                             </div>
                             <div class="input-field col s4">
                                 <button class="btn waves-effect waves-light cyan darken-1" type="submit" name="action">Buscar</button>
@@ -111,7 +111,7 @@
                 <%if(object == "Plano"){
                     for(Blueprint bp: blueprints)
                     {%>
-                <div class="col s12 m12">
+                <div class="col s6 m6">
                     <div class="card white">
                         <div class="card-content black-text row">
                             <span class="card-title col s12 m12"><%= bp.getName()%></span>
