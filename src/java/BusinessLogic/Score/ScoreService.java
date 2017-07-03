@@ -37,6 +37,17 @@ public class ScoreService implements IScoreService{
         IScoreRepository scoreRepo = new ScoreRepository();
         scoreRepo.SaveScore(objScore);
     }
-    
-    
+
+    @Override
+    public Score GetScoreByObjeto(String objectType, int objectId, int userId) {
+        IScoreRepository scoreRepo = new ScoreRepository();
+        return scoreRepo.GetScoreByObjeto(objectType, objectId, userId);
+    }
+
+    @Override
+    public void UpdateScore(Score objScore) {
+        IScoreRepository scoreRepo = new ScoreRepository();
+        scoreRepo.UpdateScore(objScore);
+    }
+               
 }

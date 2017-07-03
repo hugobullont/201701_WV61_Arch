@@ -45,4 +45,28 @@ public class ScoreRepository implements IScoreRepository {
         session.getTransaction().commit();
         session.close();
     }
+
+    @Override
+    public Score GetScoreByObjeto(String objectType, int objectId, int userId) {
+        Session session = ArchHibernateUtil.getSessionFactory().openSession(); 
+        List<Score> result = session.createQuery("from Score as part where part.objectType=:b and part.idObject=:id and part.user.idUser=:userId").setParameter("b",objectType).setParameter("id",objectId).setParameter("userId", userId).list();
+        session.close();
+        if(result.size()>0)
+        {
+            return result.get(0);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    @Override
+    public void UpdateScore(Score objScore) {
+        Session session = ArchHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(objScore);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

@@ -5,13 +5,22 @@
  */
 package Servlets;
 
+import BusinessLogic.Blueprints.BlueprintsService;
+import BusinessLogic.Blueprints.IBlueprintsService;
+import BusinessLogic.Mockups.IMockupsService;
+import BusinessLogic.Mockups.MockupsService;
+import BusinessLogic.Score.*;
+import Entities.Score;
+import Entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -72,7 +81,37 @@ public class Valorar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        
+        IBlueprintsService bpService = new BlueprintsService();
+        IMockupsService mkService = new MockupsService();
+        IScoreService scoreService = new ScoreService();
+        
+        User objUser = (User) session.getAttribute("objUser");
+        String value = request.getParameter("valueGroup");
+        int intValue = Integer.valueOf(value);
+        
+        int objectId = Integer.parseInt(request.getParameter("objectId"));
+        String objectType = request.getParameter("objectType");
+        
+        Score objScore = scoreService.GetScoreByObjeto(objectType, objectId, objUser.getIdUser());
+        
+        if(objScore == null)
+        {
+            objScore.setIdObject(objectId);
+            objScore.setObjectType(objectType);
+            objScore.setUser(objUser);
+            objScore.setScore(intValue);
+            scoreService.SaveScore(objScore);
+        }
+        else
+        {
+            objScore.setScore(intValue);
+            scoreService.UpdateScore(objScore);
+        }
+        
+        RequestDispatcher rdInfo = request.getRequestDispatcher("objectInformation.jsp");
+        rdInfo.forward(request, response);
     }
 
     /**

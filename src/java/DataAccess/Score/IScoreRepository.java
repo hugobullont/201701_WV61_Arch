@@ -14,4 +14,6 @@ import Entities.Score;
 public interface IScoreRepository {
     public float CalcularPromObjeto(String objectType, int objectId);
     public void SaveScore(Score objScore);
+    public Score GetScoreByObjeto(String objectType, int objectId, int userId);
+    public void UpdateScore(Score objScore);
 }

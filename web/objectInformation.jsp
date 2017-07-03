@@ -114,17 +114,17 @@
                             <span class="card-title col s12 m12">¡Valora este Aporte!</span>
                             <form action="Valorar" method="POST" class="row">
                                 <div class="input-field col s12 m12">
-                                    <p><input name="valueGroup" type="radio" id="value0" />
+                                    <p><input name="valueGroup" type="radio" id="0" value="0" />
                                         <label for="value0">0</label></p>
-                                    <p><input name="valueGroup" type="radio" id="value1" />
+                                    <p><input name="valueGroup" type="radio" id="1" value="1" />
                                         <label for="value1">1</label></p>
-                                    <p><input name="valueGroup" type="radio" id="value2" />
+                                    <p><input name="valueGroup" type="radio" id="2" value="2"/>
                                         <label for="value2">2</label></p>
-                                    <p><input name="valueGroup" type="radio" id="value3" />
+                                    <p><input name="valueGroup" type="radio" id="3" value="3"/>
                                         <label for="value3">3</label></p>
-                                    <p><input name="valueGroup" type="radio" id="value4" />
+                                    <p><input name="valueGroup" type="radio" id="4" value="4"/>
                                         <label for="value4">4</label></p>
-                                    <p><input name="valueGroup" type="radio" id="value5" />
+                                    <p><input name="valueGroup" type="radio" id="5" value="5"/>
                                         <label for="value5">5</label></p>
                                     <%if (objType.contains("P")){%>
                                     <input type="hidden" id="objectId" name="objectId" value="<%= objectBlueprint.getIdBlueprint()%>">
