@@ -10,3 +10,5 @@
 $(document).ready(function() {
     $('input#input_text, textarea#textarea1').characterCounter();
   });
+  
+$('.carousel.carousel-slider').carousel({fullWidth: true});

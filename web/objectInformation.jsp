@@ -4,6 +4,10 @@
     Author     : Hugo
 --%>
 
+<%@page import="BusinessLogic.Photos.PhotosService"%>
+<%@page import="BusinessLogic.Photos.IPhotosService"%>
+<%@page import="Entities.Photo"%>
+<%@page import="java.util.List"%>
 <%@page import="Entities.User"%>
 <%@page import="BusinessLogic.Score.*"%>
 <%@page import="Entities.Mockup"%>
@@ -15,6 +19,7 @@
     HttpSession httpsession = request.getSession(false);
     IUserService userService = new UserService();
     IScoreService scoreService = new ScoreService();
+    IPhotosService photoService = new PhotosService();
     
     String uid = (String) httpsession.getAttribute("uid");
     String accessToken = (String) httpsession.getAttribute("accessToken");
@@ -100,10 +105,22 @@
                             </div>
                             <%}%>
                             <%if(objType.contains("M")){%>
-                            <span class="card-title col s12 m12"></span>
-                            <div class="col s6 m6 l6">
-                                <h6 class="grey-text text-lighten-1"></h6>
-                                <h6 class="grey-text text-lighten-1"></h6>
+                            <span class="card-title col s12 m12"><%=objectMockup.getName()%></span>
+                            <% List<Photo> listPhotos = photoService.GetPhotosByMockupId(objectMockup.getIdMockup());
+                            %>
+                            <div class="col s12 m12">
+                                <h6 class="grey-text text-lighten-1">Descripción</h6>
+                                <h6 class="grey-text"><%=objectMockup.getDescription()%></h6>
+                                <h6 class="grey-text text-lighten-1">Valoración</h6>
+                                <%float score = Float.valueOf(scoreService.GetPromObject("M", objectMockup.getIdMockup())); %>
+                                <h6 class="grey-text"><%if(score>-1){ out.print(score);} else{out.print("No hay Valoraciones");} %></h6>
+                                
+                                <div class="carousel carousel-slider">
+                                    <%for (Photo photo : listPhotos) {%>
+                                    <a class="carousel-item"><img src="imageServlet?id=<%=photo.getIdPhoto()%>"></a>
+                                    <%}%>
+                                </div>
+                                
                             </div>
                             <%}%>
                         </div>
