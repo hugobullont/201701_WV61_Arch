@@ -30,6 +30,7 @@
     String imgurl = userService.GetProfilePictureUrlByFBId(uid);
     String listAction = (String) httpSession.getAttribute("listAction");
     String object = (String) httpSession.getAttribute("object");
+    String searchString = (String) httpSession.getAttribute("searchString");
     List<Blueprint> blueprints = null;
     List<Mockup> mockups = null;
     if(object == "Plano")
@@ -88,7 +89,7 @@
                           <div class="row center-align">
                             <div class="input-field col s8">
                               <i class="material-icons prefix">search</i>
-                              <input placeholder="Ingrese el texto a Buscar..." id="searchBar" name="searchBar" type="text" class="validate" maxlength="45">
+                              <input placeholder="Ingrese el texto a Buscar..." id="searchBar" name="searchBar" type="text" class="validate" maxlength="45" <% if(searchString != null){out.println("value='"+searchString+"'"); }%>>
                             </div>
                             <div class="input-field col s4">
                                 <button class="btn waves-effect waves-light cyan darken-1" type="submit" name="action">Buscar</button>
@@ -136,7 +137,30 @@
                 <%if(object == "Maqueta"){
                     for(Mockup mk: mockups)
                     {%>
-                <div class="col s12 m12">
+                <div class="col s6 m6">
+                    <% Photo firstPhoto = photoService.GetFirstPhotoByMockupId(mk.getIdMockup()); %>
+                    <div class="card">
+                        <div class="card-image">
+                          <img src="imageServlet?id=<%=firstPhoto.getIdPhoto()%>">
+                          <span class="card-title"><%=mk.getName()%></span>
+                          <%float score = Float.valueOf(scoreService.GetPromObject("M", mk.getIdMockup())); %>
+                        </div>
+                        <div class="card-content row">
+                          <div class="col s12 m12">
+                                <h6 class="grey-text text-lighten-1">Aporte de: <%= mk.getUser().getName() %></h6>
+                                <h6 class="grey-text text-lighten-1">Valoración del Aporte: <%if(score>-1){ out.print(score);} else{out.print("No hay Valoraciones");} %></h6>
+                          </div>
+                        </div>
+                        <div class="card-action">
+                          <form action="MostrarInformacion" method="POST">
+                                    <div class="input-field">
+                                        <button class="btn waves-effect waves-light cyan darken-1" type="submit" name="btnShow">+ Info</button>
+                                        <input type="hidden" id="objectId" name="objectId" value="<%= mk.getIdMockup()%>">
+                                        <input type="hidden" id="objectType" name="objectType" value="M">
+                                    </div>
+                          </form>
+                        </div>
+                    </div>
                 </div><%}}%>
             </div>
         </main>

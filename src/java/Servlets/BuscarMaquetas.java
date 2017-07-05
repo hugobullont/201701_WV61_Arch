@@ -5,8 +5,12 @@
  */
 package Servlets;
 
-import BusinessLogic.Blueprints.*;
+import BusinessLogic.Blueprints.BlueprintsService;
+import BusinessLogic.Blueprints.IBlueprintsService;
+import BusinessLogic.Mockups.IMockupsService;
+import BusinessLogic.Mockups.MockupsService;
 import Entities.Blueprint;
+import Entities.Mockup;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -22,8 +26,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Usuario
  */
-@WebServlet(name = "BuscarPlanos", urlPatterns = {"/BuscarPlanos"})
-public class BuscarPlanos extends HttpServlet {
+@WebServlet(name = "BuscarMaquetas", urlPatterns = {"/BuscarMaquetas"})
+public class BuscarMaquetas extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,19 +43,19 @@ public class BuscarPlanos extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
         
-        IBlueprintsService bpservice = new BlueprintsService();
+        IMockupsService mkservice = new MockupsService();
         
-        String pageTitle = "Buscar Plano";
+        String pageTitle = "Buscar Maqueta";
         session.setAttribute("pageTitle", pageTitle);
         
         String listAction= "Search";
         session.setAttribute("listAction",listAction);
         
-        String object = "Plano";
+        String object = "Maqueta";
         session.setAttribute("object",object);
         
-        List<Blueprint> planos = bpservice.GetAllBlueprints();
-        session.setAttribute("listObjects", planos);
+        List<Mockup> maquetas = mkservice.GetAllMockups();
+        session.setAttribute("listObjects", maquetas);
         
         session.setAttribute("searchString",null);
         RequestDispatcher rdSearchBlueprints = request.getRequestDispatcher("listObjects.jsp");

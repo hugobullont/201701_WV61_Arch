@@ -87,6 +87,7 @@ public class Buscar_Plano extends HttpServlet {
         
         List<Blueprint> planos = bpservice.GetBlueprintsByString(search);
         session.setAttribute("listObjects", planos);
+        session.setAttribute("searchString",search);
         
         RequestDispatcher rdSearchBlueprints = request.getRequestDispatcher("listObjects.jsp");
         rdSearchBlueprints.forward(request, response);

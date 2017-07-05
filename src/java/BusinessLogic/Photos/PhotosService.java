@@ -32,5 +32,11 @@ public class PhotosService implements IPhotosService{
         IPhotosRepository repo = new PhotosRepository();
         repo.SavePhoto(objPhoto);
     }
+
+    @Override
+    public Photo GetPhotoById(int photoId) {
+        IPhotosRepository repo = new PhotosRepository();
+        return repo.GetPhotoById(photoId);
+    }
     
 }

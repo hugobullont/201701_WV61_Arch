@@ -40,4 +40,15 @@ public class PhotosRepository implements IPhotosRepository{
         session.close();
     }
     
+    @Override
+    public Photo GetPhotoById(int photoId)
+    {
+        Photo photo = new Photo();
+        Session session = ArchHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        photo = (Photo) session.get(Photo.class, photoId);
+        session.close();
+        return photo;
+    }
+    
 }

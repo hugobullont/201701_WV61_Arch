@@ -5,25 +5,26 @@
  */
 package Servlets;
 
-import BusinessLogic.Blueprints.*;
-import Entities.Blueprint;
+import BusinessLogic.Photos.IPhotosService;
+import BusinessLogic.Photos.PhotosService;
+import Entities.Photo;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Usuario
  */
-@WebServlet(name = "BuscarPlanos", urlPatterns = {"/BuscarPlanos"})
-public class BuscarPlanos extends HttpServlet {
+@WebServlet(name = "imageServlet", urlPatterns = {"/imageServlet"})
+public class imageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,25 +38,18 @@ public class BuscarPlanos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(false);
-        
-        IBlueprintsService bpservice = new BlueprintsService();
-        
-        String pageTitle = "Buscar Plano";
-        session.setAttribute("pageTitle", pageTitle);
-        
-        String listAction= "Search";
-        session.setAttribute("listAction",listAction);
-        
-        String object = "Plano";
-        session.setAttribute("object",object);
-        
-        List<Blueprint> planos = bpservice.GetAllBlueprints();
-        session.setAttribute("listObjects", planos);
-        
-        session.setAttribute("searchString",null);
-        RequestDispatcher rdSearchBlueprints = request.getRequestDispatcher("listObjects.jsp");
-        rdSearchBlueprints.forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet imageServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet imageServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,7 +64,21 @@ public class BuscarPlanos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String id = request.getParameter("id");
+        
+        IPhotosService photoService = new PhotosService();
+        Photo objPhoto = photoService.GetPhotoById(Integer.valueOf(id));
+        byte[] photoBytes = objPhoto.getFile();
+        
+        InputStream input = new ByteArrayInputStream(photoBytes);
+        OutputStream output = response.getOutputStream();
+        
+        response.setContentType("image/gif");
+        output.write(photoBytes); // even here we got the same as below.
+        output.flush();
+        output.close();
+        
+        
     }
 
     /**

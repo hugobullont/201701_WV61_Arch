@@ -16,4 +16,5 @@ public interface IPhotosService {
     public List<Photo> GetPhotosByMockupId(int mockupId);
     public Photo GetFirstPhotoByMockupId(int mockupId);
     public void SavePhoto(Photo objPhoto);
+    public Photo GetPhotoById(int photoId);
 }
