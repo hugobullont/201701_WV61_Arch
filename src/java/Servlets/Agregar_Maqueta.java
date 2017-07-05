@@ -5,11 +5,19 @@
  */
 package Servlets;
 
-import BusinessLogic.Blueprints.*;
-import Entities.*;
+import BusinessLogic.Mockups.IMockupsService;
+import BusinessLogic.Mockups.MockupsService;
+import BusinessLogic.Photos.IPhotosService;
+import BusinessLogic.Photos.PhotosService;
+import Entities.Mockup;
+import Entities.Photo;
+import Entities.User;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -21,14 +29,13 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
 
-
 /**
  *
  * @author Hugo
  */
-@WebServlet(name = "Agregar_Plano", urlPatterns = {"/Agregar_Plano"})
+@WebServlet(name = "Agregar_Maqueta", urlPatterns = {"/Agregar_Maqueta"})
 @MultipartConfig
-public class Agregar_Plano extends HttpServlet {
+public class Agregar_Maqueta extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,6 +49,18 @@ public class Agregar_Plano extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Agregar_Maqueta</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Agregar_Maqueta at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,34 +90,40 @@ public class Agregar_Plano extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        IBlueprintsService blueprintService = new BlueprintsService();
+        IMockupsService mkService = new MockupsService();
+        IPhotosService photoService = new PhotosService();
         User cUser = (User) session.getAttribute("objUser");
-        Blueprint objBlueprint = new Blueprint();
+        Mockup objMockup = new Mockup();
         
-        String name = request.getParameter("txtnamePlano");
-        String description = request.getParameter("txtAreaDescriptionPlano");
+        String name = request.getParameter("txtnameMaqueta");
+        String description = request.getParameter("txtAreaDescriptionMaqueta");
         
         
-        Part filePart = request.getPart("fileBlueprints");
-        String fileName = filePart.getSubmittedFileName();
-        String[] fileNameFull = fileName.split("\\.");
-        String fileExtension = fileNameFull[1];
-        InputStream fileContent = filePart.getInputStream();
-        byte[] bytes = IOUtils.toByteArray(fileContent);
         
-        objBlueprint.setName(name);
-        objBlueprint.setDescription(description);
-        objBlueprint.setUser(cUser);
-        objBlueprint.setBlueprintFile(bytes);
-        objBlueprint.setFileType(fileExtension);
+        objMockup.setUser(cUser);
+        objMockup.setDescription(description);
+        objMockup.setName(name);
         
-        blueprintService.SaveBlueprint(objBlueprint);
+        mkService.SaveMockup(objMockup);
+        
+        List<Part> fileParts = request.getParts().stream().filter(part -> "filePhotos".equals(part.getName())).collect(Collectors.toList()); // Retrieves <input type="file" name="file" multiple="true">
+
+        for (Part filePart : fileParts) {
+            Photo objPhoto = new Photo();
+            String fileName = filePart.getSubmittedFileName();
+            String[] fileNameFull = fileName.split("\\.");
+            String fileExtension = fileNameFull[1];
+            InputStream fileContent = filePart.getInputStream();
+            byte[] bytes = IOUtils.toByteArray(fileContent);
+            
+            objPhoto.setFile(bytes);
+            objPhoto.setFileType(fileExtension);
+            objPhoto.setMockup(objMockup);
+            photoService.SavePhoto(objPhoto);
+        }
         
         RequestDispatcher rdHome = request.getRequestDispatcher("home.jsp");
         rdHome.forward(request, response);
-        
-        
-        
     }
 
     /**

@@ -1,5 +1,5 @@
 package Entities;
-// Generated 23-jun-2017 21:49:20 by Hibernate Tools 4.3.1
+// Generated 03-jul-2017 14:58:13 by Hibernate Tools 4.3.1
 
 
 
@@ -12,14 +12,16 @@ public class Photo  implements java.io.Serializable {
      private int idPhoto;
      private Mockup mockup;
      private byte[] file;
+     private String fileType;
 
     public Photo() {
     }
 
-    public Photo(int idPhoto, Mockup mockup, byte[] file) {
+    public Photo(int idPhoto, Mockup mockup, byte[] file, String fileType) {
        this.idPhoto = idPhoto;
        this.mockup = mockup;
        this.file = file;
+       this.fileType = fileType;
     }
    
     public int getIdPhoto() {
@@ -42,6 +44,13 @@ public class Photo  implements java.io.Serializable {
     
     public void setFile(byte[] file) {
         this.file = file;
+    }
+    public String getFileType() {
+        return this.fileType;
+    }
+    
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
 

@@ -58,15 +58,15 @@
                   <div class="card white">
                     <div class="card-content black-text">
                       <span class="card-title">Agregar <%=actionAdd%></span>
-                      <form action="Agregar_<%=actionAdd%>" method="POST" enctype="multipart/form-data">
+                      <form action="Agregar_<%=actionAdd%>" method="POST" enctype="multipart/form-data" name="Agregar_<%=actionAdd%>" >
                           <div class="row">
                             <div class="input-field col s12">
-                                <input id="txtname" name="txtname" type="text" class="validate" maxlength="45" data-length="45" required>
-                                <label for="txtname">Nombre (<%=actionAdd%>)</label>
+                                <input id="txtname<%=actionAdd%>" name="txtname<%=actionAdd%>" type="text" class="validate" maxlength="45" data-length="45" required>
+                                <label for="txtname<%=actionAdd%>">Nombre (<%=actionAdd%>)</label>
                             </div>
                             <div class="input-field col s12">
-                                <textarea id="txtAreaDescription"  name="txtAreaDescription" class="materialize-textarea" maxlength="255" data-length="255" required></textarea>
-                                <label for="txtAreaDescription">Descripción</label>
+                                <textarea id="txtAreaDescription<%=actionAdd%>"  name="txtAreaDescription<%=actionAdd%>" class="materialize-textarea" maxlength="255" data-length="255" required></textarea>
+                                <label for="txtAreaDescription<%=actionAdd%>">Descripción</label>
                             </div>
                             <%if (actionAdd == "Plano") {%>
                             <div class="file-field input-field col s12">
@@ -83,7 +83,7 @@
                             <div class="file-field input-field col s12">
                                 <div class="btn cyan darken-1">
                                   <span>Examinar</span>
-                                  <input multiple id="filePhotos" type="file" name="filePhotos" accept="image/*">
+                                  <input multiple id="filePhotos" type="file" name="filePhotos" accept="image/*" required>
                                 </div>
                                 <div class="file-path-wrapper">
                                   <input class="file-path validate" type="text" placeholder="Sube una o más fotos de tu Maqueta">
