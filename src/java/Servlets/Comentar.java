@@ -7,12 +7,13 @@ package Servlets;
 
 import BusinessLogic.Blueprints.BlueprintsService;
 import BusinessLogic.Blueprints.IBlueprintsService;
+import BusinessLogic.Comments.ICommentsService;
+import BusinessLogic.Comments.CommentsService;
 import BusinessLogic.Mockups.IMockupsService;
 import BusinessLogic.Mockups.MockupsService;
-import BusinessLogic.Score.*;
 import Entities.Blueprint;
+import Entities.Comment;
 import Entities.Mockup;
-import Entities.Score;
 import Entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,8 +29,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Usuario
  */
-@WebServlet(name = "Valorar", urlPatterns = {"/Valorar"})
-public class Valorar extends HttpServlet {
+@WebServlet(name = "Comentar", urlPatterns = {"/Comentar"})
+public class Comentar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,10 +49,10 @@ public class Valorar extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Valorar</title>");            
+            out.println("<title>Servlet Comentar</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Valorar at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Comentar at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -87,30 +88,22 @@ public class Valorar extends HttpServlet {
         
         IBlueprintsService bpService = new BlueprintsService();
         IMockupsService mkService = new MockupsService();
-        IScoreService scoreService = new ScoreService();
+        ICommentsService commentService = new CommentsService();
         
         User objUser = (User) session.getAttribute("objUser");
-        String value = request.getParameter("valueGroup");
-        int intValue = Integer.valueOf(value);
+        String value = request.getParameter("commentInput");
         
         int objectId = Integer.parseInt(request.getParameter("objectId"));
         String objectType = request.getParameter("objectType");
         
-        Score objScore = scoreService.GetScoreByObjeto(objectType, objectId, objUser.getIdUser());
+        Comment objComment = new Comment();
         
-        if(objScore == null)
-        {
-            objScore.setIdObject(objectId);
-            objScore.setObjectType(objectType);
-            objScore.setUser(objUser);
-            objScore.setScore(intValue);
-            scoreService.SaveScore(objScore);
-        }
-        else
-        {
-            objScore.setScore(intValue);
-            scoreService.UpdateScore(objScore);
-        }
+        objComment.setDescription(value);
+        objComment.setIdObject(objectId);
+        objComment.setObjectType(objectType);
+        objComment.setUser(objUser);
+        
+        commentService.SaveComment(objComment);
         
         if("P".equals(objectType))
         {
@@ -125,6 +118,7 @@ public class Valorar extends HttpServlet {
             session.setAttribute("informationObjectType", objectType);
             session.setAttribute("informationObject", objMockup);
         }
+        
         RequestDispatcher rdInfo = request.getRequestDispatcher("objectInformation.jsp");
         rdInfo.forward(request, response);
     }

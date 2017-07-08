@@ -75,7 +75,7 @@
                                   <input id="fileBlueprints" type="file" name="fileBlueprints" accept=".dwg, .zip, .rar" required>
                                 </div>
                                 <div class="file-path-wrapper">
-                                  <input class="file-path validate" type="text" placeholder="Sube tu Plano en formato DWG, ZIP o RAR">
+                                  <input class="file-path validate" type="text" placeholder="Sube tu Plano en formato DWG, ZIP o RAR - 16MB Máx.">
                                 </div>
                             </div>
                             <%}%>
@@ -86,7 +86,7 @@
                                   <input multiple id="filePhotos" type="file" name="filePhotos" accept="image/*" required>
                                 </div>
                                 <div class="file-path-wrapper">
-                                  <input class="file-path validate" type="text" placeholder="Sube una o más fotos de tu Maqueta">
+                                  <input class="file-path validate" type="text" placeholder="Sube una o más fotos de tu Maqueta - 16MB Máx por Foto">
                                 </div>
                             </div>
                             <%}%>

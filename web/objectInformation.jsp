@@ -4,6 +4,9 @@
     Author     : Hugo
 --%>
 
+<%@page import="Entities.Comment"%>
+<%@page import="BusinessLogic.Comments.CommentsService"%>
+<%@page import="BusinessLogic.Comments.ICommentsService"%>
 <%@page import="BusinessLogic.Photos.PhotosService"%>
 <%@page import="BusinessLogic.Photos.IPhotosService"%>
 <%@page import="Entities.Photo"%>
@@ -20,6 +23,7 @@
     IUserService userService = new UserService();
     IScoreService scoreService = new ScoreService();
     IPhotosService photoService = new PhotosService();
+    ICommentsService commentService = new CommentsService();
     
     String uid = (String) httpsession.getAttribute("uid");
     String accessToken = (String) httpsession.getAttribute("accessToken");
@@ -31,18 +35,25 @@
     
     User objUser = (User) session.getAttribute("objUser");
     
+    int objectId = 0;
+    
+    
     boolean owner = false;
     
     if(objType.contains("P"))
     {
         objectBlueprint = (Blueprint)session.getAttribute("informationObject");
         if(objectBlueprint.getUser().getIdUser() == objUser.getIdUser()) owner = true;
+        objectId = objectBlueprint.getIdBlueprint();
     }
     if(objType.contains("M"))
     {
          objectMockup = (Mockup)session.getAttribute("informationObject");
          if(objectMockup.getUser().getIdUser() == objUser.getIdUser()) owner = true;
+         objectId = objectMockup.getIdMockup();
     }
+    
+    List<Comment> comments = commentService.GetAllCommentsFromObject(objType, objectId);
     
 %>
 <html>
@@ -92,7 +103,7 @@
                                 <h6 class="grey-text text-lighten-1">Tipo de Archivo</h6>
                                 <h6 class="grey-text"><%=objectBlueprint.getFileType().toLowerCase()%></h6>
                                 <h6 class="grey-text text-lighten-1">Valoración</h6>
-                                <%float score = Float.valueOf(scoreService.GetPromObject("P", objectBlueprint.getIdBlueprint())); %>
+                                <%int score = scoreService.GetPromObject("P", objectBlueprint.getIdBlueprint()); %>
                                 <h6 class="grey-text"><%if(score>-1){ out.print(score);} else{out.print("No hay Valoraciones");} %></h6>
                                 
                                 <form action="Descargar" method="POST">
@@ -112,7 +123,7 @@
                                 <h6 class="grey-text text-lighten-1">Descripción</h6>
                                 <h6 class="grey-text"><%=objectMockup.getDescription()%></h6>
                                 <h6 class="grey-text text-lighten-1">Valoración</h6>
-                                <%float score = Float.valueOf(scoreService.GetPromObject("M", objectMockup.getIdMockup())); %>
+                                <%int score = scoreService.GetPromObject("M", objectMockup.getIdMockup()); %>
                                 <h6 class="grey-text"><%if(score>-1){ out.print(score);} else{out.print("No hay Valoraciones");} %></h6>
                                 
                                 <div class="carousel carousel-slider">
@@ -160,8 +171,51 @@
                                 </div>
                             </form>
                         </div>
-                </div>
+                    </div>
+                    <div class="card white">
+                        <div class="card-content black-text row">
+                            <span class="card-title col s12 m12">¡Envía un Comentario!</span>
+                            <form action="Comentar" method="POST" class="row">
+                                <div class="input-field col s8">
+                                  <input placeholder="Ingrese su Comentario" id="commentInput" name="commentInput" type="text" class="validate" maxlength="140">
+                                  <%if (objType.contains("P")){%>
+                                    <input type="hidden" id="objectId" name="objectId" value="<%= objectBlueprint.getIdBlueprint()%>">
+                                    <input type="hidden" id="objectType" name="objectType" value="P">
+                                    <% } %>
+                                    <%if (objType.contains("M")){%>
+                                    <input type="hidden" id="objectId" name="objectId" value="<%= objectMockup.getIdMockup() %>">
+                                    <input type="hidden" id="objectType" name="objectType" value="M">
+                                    <% } %>
+                                </div>
+                                  <div class="input-field col s4">
+                                      <button class="btn waves-effect waves-light cyan darken-1" type="submit" name="action">Enviar</button>
+                                  </div>
+                            </form>
+                        </div>
+                    </div>
                     <%}%>
+                    <div class="col s12 m12">
+                        <div class="card white">
+                          <div class="card-content black-text">
+                            <span class="card-title">Comentarios</span>
+                          </div>
+                        </div>
+                    </div>
+                    <%
+                    for(Comment comment : comments)
+                    {%>
+                    <div class="col s6 m6">
+                        <div class="card white">
+                            <div class="card-content black-text row">
+                                <div>
+                                    <h6 class="black-text">
+                                        <%= comment.getDescription() %>
+                                    </h6>
+                                    <h6 class="grey-text text-lighten-1">Comenatario de: <%= comment.getUser().getName() %></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div><%}%>
             </div>
         </main>
         <script src="js/materialize.js"></script>

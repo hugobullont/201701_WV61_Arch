@@ -116,7 +116,7 @@
                     <div class="card white">
                         <div class="card-content black-text row">
                             <span class="card-title col s12 m12"><%= bp.getName()%></span>
-                            <%float score = Float.valueOf(scoreService.GetPromObject("P", bp.getIdBlueprint())); %>
+                            <%int score = scoreService.GetPromObject("P", bp.getIdBlueprint()); %>
                             <div class="col s6 m6 l6">
                                 <h6 class="grey-text text-lighten-1">Aporte de: <%= bp.getUser().getName() %></h6>
                                 <h6 class="grey-text text-lighten-1">Valoración del Aporte: <%if(score>-1){ out.print(score);} else{out.print("No hay Valoraciones");} %></h6>
@@ -143,7 +143,7 @@
                         <div class="card-image">
                           <img src="imageServlet?id=<%=firstPhoto.getIdPhoto()%>">
                           <span class="card-title"><%=mk.getName()%></span>
-                          <%float score = Float.valueOf(scoreService.GetPromObject("M", mk.getIdMockup())); %>
+                          <%int score = scoreService.GetPromObject("M", mk.getIdMockup()); %>
                         </div>
                         <div class="card-content row">
                           <div class="col s12 m12">
